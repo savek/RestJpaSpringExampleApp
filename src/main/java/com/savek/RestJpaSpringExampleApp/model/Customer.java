@@ -1,10 +1,9 @@
 package com.savek.RestJpaSpringExampleApp.model;
 
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Primary;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +11,7 @@ import javax.persistence.*;
 @Setter
 public class Customer {
 	@Id()
+	@Setter(AccessLevel.NONE)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
 	private Long id;
@@ -34,4 +34,12 @@ public class Customer {
 	@Column(name = "sex", nullable = false, columnDefinition = "VARCHAR(6) CHECK (sex IN ('MALE', 'FEMALE'))")
 	@Enumerated(value = EnumType.STRING)
 	private Sex sex;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "registred_address_id", insertable = false, updatable = false)
+	private Address registredAddress;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "actual_address_id", insertable = false, updatable = false)
+	private Address actualAddress;
 }
