@@ -37,15 +37,15 @@ public class Customer {
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "registred_address_id",
-			insertable = false,
-			updatable = false,
-			foreignKey = @ForeignKey(name = "fk_registred_address_id"))
+				insertable = false,
+				updatable = false,
+				foreignKey = @ForeignKey(name = "fk_registred_address_id"))
 	private Address registredAddress;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "actual_address_id",
-			insertable = false,
-			updatable = false,
-			foreignKey = @ForeignKey(name = "fk_actual_address_id"))
+				insertable = false,
+				updatable = false,
+				foreignKey = @ForeignKey(name = "fk_actual_address_id"))
 	private Address actualAddress;
 }
