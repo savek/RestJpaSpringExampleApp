@@ -42,7 +42,7 @@ public class Address {
 	@Column(nullable = false)
 	private Timestamp modified;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany
 	@JoinColumns({
 			@JoinColumn(name = "registred_address_id", referencedColumnName = "id"),
 			@JoinColumn(name = "actual_address_id", referencedColumnName = "id")
