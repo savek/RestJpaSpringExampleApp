@@ -1,15 +1,31 @@
 package com.savek.RestJpaSpringExampleApp.model;
 
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
-public class Customer {
+@NoArgsConstructor
+public class Customer implements Serializable {
+
+	public Customer(Long registredAddresId,
+	                Long actualAddressId,
+	                String firstName,
+	                String lastName,
+	                String middleName,
+	                Sex sex) {
+		this.registredAddresId = registredAddresId;
+		this.actualAddressId = actualAddressId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+		this.sex = sex;
+	}
+
 	@Id()
 	@Setter(AccessLevel.NONE)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,6 +56,7 @@ public class Customer {
 				insertable = false,
 				updatable = false,
 				foreignKey = @ForeignKey(name = "fk_registred_address_id"))
+	@Setter(AccessLevel.NONE)
 	private Address registredAddress;
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -47,5 +64,6 @@ public class Customer {
 				insertable = false,
 				updatable = false,
 				foreignKey = @ForeignKey(name = "fk_actual_address_id"))
+	@Setter(AccessLevel.NONE)
 	private Address actualAddress;
 }

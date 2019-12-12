@@ -1,17 +1,35 @@
 package com.savek.RestJpaSpringExampleApp.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Address {
+@NoArgsConstructor
+public class Address implements Serializable {
+
+	public Address(String contry,
+	               String region,
+	               String city,
+	               String street,
+	               String house,
+	               String flat) {
+		this.contry = contry;
+		this.region = region;
+		this.city = city;
+		this.street = street;
+		this.house = house;
+		this.flat = flat;
+		this.created = new Timestamp(System.currentTimeMillis());
+		this.modified = new Timestamp(System.currentTimeMillis());
+	}
+
 	@Id
 	@Setter(AccessLevel.NONE)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,5 +65,21 @@ public class Address {
 			@JoinColumn(name = "registred_address_id", referencedColumnName = "id"),
 			@JoinColumn(name = "actual_address_id", referencedColumnName = "id")
 	})
-	private List<Customer> customers;
+	@Setter(AccessLevel.NONE)
+	private Set<Customer> customers;
+
+	@Override
+	public String toString() {
+		return "Address{" +
+				"id=" + id +
+				", contry='" + contry + '\'' +
+				", region='" + region + '\'' +
+				", city='" + city + '\'' +
+				", street='" + street + '\'' +
+				", house='" + house + '\'' +
+				", flat='" + flat + '\'' +
+				", created=" + created +
+				", modified=" + modified +
+				'}';
+	}
 }
