@@ -1,11 +1,13 @@
 package com.savek.RestJpaSpringExampleApp.model;
 
-import lombok.*;
-import lombok.experimental.FieldNameConstants;
-
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,22 +15,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class Address implements Serializable {
-
-	public Address(String contry,
-	               String region,
-	               String city,
-	               String street,
-	               String house,
-	               String flat) {
-		this.contry = contry;
-		this.region = region;
-		this.city = city;
-		this.street = street;
-		this.house = house;
-		this.flat = flat;
-		this.created = new Timestamp(System.currentTimeMillis());
-		this.modified = new Timestamp(System.currentTimeMillis());
-	}
 
 	@Id
 	@Setter(AccessLevel.NONE)
@@ -60,13 +46,42 @@ public class Address implements Serializable {
 	@Column(nullable = false)
 	private Timestamp modified;
 
-	@OneToMany
-	@JoinColumns({
-			@JoinColumn(name = "registred_address_id", referencedColumnName = "id"),
-			@JoinColumn(name = "actual_address_id", referencedColumnName = "id")
-	})
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "actual_address_id", referencedColumnName = "id")
 	@Setter(AccessLevel.NONE)
-	private Set<Customer> customers;
+	@Getter(AccessLevel.NONE)
+	private Set<Customer> customers_actual_adr;
+
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "registred_address_id", referencedColumnName = "id")
+	@Setter(AccessLevel.NONE)
+	@Getter(AccessLevel.NONE)
+	private Set<Customer> customers_registred_adr;
+
+	public Address(String contry,
+	               String region,
+	               String city,
+	               String street,
+	               String house,
+	               String flat) {
+		this.contry = contry;
+		this.region = region;
+		this.city = city;
+		this.street = street;
+		this.house = house;
+		this.flat = flat;
+		this.created = new Timestamp(System.currentTimeMillis());
+		this.modified = new Timestamp(System.currentTimeMillis());
+	}
+
+	/** Возврат списка покупателей, ссылающих на этот адрес */
+	public Set<Customer> getCustomers() {
+		Set<Customer> customers = new HashSet<>();
+		customers.addAll(customers_actual_adr);
+		customers.addAll(customers_registred_adr);
+
+		return customers;
+	}
 
 	@Override
 	public String toString() {

@@ -2,7 +2,6 @@ package com.savek.RestJpaSpringExampleApp.model;
 
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 

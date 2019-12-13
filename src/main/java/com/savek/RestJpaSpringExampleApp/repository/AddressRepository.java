@@ -8,6 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface AddressRepository extends CrudRepository<Address, Long> {
-
 	Address findById(long id);
 }
