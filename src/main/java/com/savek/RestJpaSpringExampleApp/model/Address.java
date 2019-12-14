@@ -46,6 +46,10 @@ public class Address implements Serializable {
 	@Column(nullable = false)
 	private Timestamp modified;
 
+	/** Поле игнорируется при валидации схемы */
+	@Transient
+	private Integer ignoredField;
+
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "actual_address_id", referencedColumnName = "id")
 	@Setter(AccessLevel.NONE)
@@ -74,7 +78,8 @@ public class Address implements Serializable {
 		this.modified = new Timestamp(System.currentTimeMillis());
 	}
 
-	/** Возврат списка покупателей, ссылающих на этот адрес */
+	/** Возврат списка покупателей, ссылающих на этот адрес.
+	 * На тот случай, если на этот адрес никто не ссылается, возвращается пустая коллекция. */
 	public Set<Customer> getCustomers() {
 		Set<Customer> customers = new HashSet<>();
 		customers.addAll(customers_actual_adr);

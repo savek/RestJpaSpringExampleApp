@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import com.savek.RestJpaSpringExampleApp.service.AddressRepositoryService;
 
 @SpringBootApplication
 public class RestJpaSpringExampleAppApplication {
@@ -28,14 +29,17 @@ public class RestJpaSpringExampleAppApplication {
 	@Autowired
 	CustomerRepository customerRepository;
 
+	@Autowired
+	AddressRepositoryService addressRepositoryService;
+
 	@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
-			fillData();
+//			fillData();
 			showAddressList();
-			showCustomerList();
+//			showCustomerList();
 
-			showCustomersViaAddress(1);
+//			showCustomersViaAddress(3);
 		};
 	}
 
@@ -61,7 +65,7 @@ public class RestJpaSpringExampleAppApplication {
 	private void showAddressList() {
 		log.info("Addresses found with findAll():");
 		log.info("-------------------------------");
-		for (Address address : addressRepository.findAll())
+		for (Address address : addressRepositoryService.findAll())
 			log.info(address.toString());
 	}
 
