@@ -18,7 +18,7 @@ public class AddressRepositoryServiceImpl implements AddressRepositoryService {
 
     @Override
     public List<Address> findAll() {
-        return (List) addressRepository.findAll();
+        return (List<Address>) addressRepository.findAll();
     }
 
     @Override
