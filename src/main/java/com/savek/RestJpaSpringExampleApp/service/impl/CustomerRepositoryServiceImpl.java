@@ -21,4 +21,15 @@ public class CustomerRepositoryServiceImpl implements CustomerRepositoryService 
     public List<Customer> findAll() {
         return (List<Customer>) customerRepository.findAll();
     }
+
+    @Override
+    public void save(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    /** Возврат общего кол-ва покупаталей */
+    @Override
+    public long getAllCount() {
+        return customerRepository.getAllCount();
+    }
 }

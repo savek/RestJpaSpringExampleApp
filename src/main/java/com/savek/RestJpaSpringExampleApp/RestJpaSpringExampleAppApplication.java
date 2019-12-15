@@ -5,6 +5,7 @@ import com.savek.RestJpaSpringExampleApp.model.Customer;
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
 import com.savek.RestJpaSpringExampleApp.repository.CustomerRepository;
 import com.savek.RestJpaSpringExampleApp.service.AddressRepositoryService;
+import com.savek.RestJpaSpringExampleApp.service.CustomerRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class RestJpaSpringExampleAppApplication {
 	}
 
 	@Autowired
-	CustomerRepository customerRepository;
+	CustomerRepositoryService customerRepositoryService;
 
 	@Autowired
 	AddressRepositoryService addressRepositoryService;
@@ -35,11 +36,18 @@ public class RestJpaSpringExampleAppApplication {
 //			showAddressList();
 //			showCustomerList();
 
-			showCustomersViaAddress(3);
+//			showCustomersViaAddress(3);
+			log.info("Customer count: " + customerRepositoryService.getAllCount());
+
+			Address adr_1 = addressRepositoryService.findById(1);
+			log.info("Customer linked to registred address: " + addressRepositoryService.getRegistredLinkedCustomerCount(adr_1));
+			log.info("Customer linked to actual address: " + addressRepositoryService.getActualLinkedCustomerCount(adr_1));
 		};
 	}
 
-	/** Отображение списка покупателей по номеру адреса */
+	/**
+	 * Отображение списка покупателей по номеру адреса
+	 * */
 	private void showCustomersViaAddress(long adr_no) {
 		log.info("\n");
 		log.info(String.format("Customers found for address %s:", adr_no));
@@ -49,11 +57,13 @@ public class RestJpaSpringExampleAppApplication {
 				.forEach(customer -> log.info("Customer id = " + customer.getId() + ", " + customer.getFirstName() + " " + customer.getLastName()));
 	}
 
-	/** Отображение списка клиентов */
+	/**
+	 *  Отображение списка клиентов
+	 *  */
 	private void showCustomerList() {
 		log.info("Customers found with findAll():");
 		log.info("-------------------------------");
-		for (Customer customer : customerRepository.findAll())
+		for (Customer customer : customerRepositoryService.findAll())
 			log.info(customer.toString());
 	}
 
@@ -65,7 +75,9 @@ public class RestJpaSpringExampleAppApplication {
 			log.info(address.toString());
 	}
 
-	/** Заполнение табличек данными */
+	/**
+	 * Заполнение табличек данными
+	 * */
 	void fillData() {
 		Address address_1 = new Address("Россия",
 				"Урал",
@@ -85,16 +97,16 @@ public class RestJpaSpringExampleAppApplication {
 		addressRepositoryService.save(address_2);
 
 		Customer customer_1 = new Customer("Шахрин", "Владимир", "Олегович", address_1, address_2, Sex.MALE);
-		customerRepository.save(customer_1);
+		customerRepositoryService.save(customer_1);
 
 		Customer customer_2 = new Customer("Зомбаков", "Валерий", "Генадьевич", address_2, address_1, Sex.MALE);
-		customerRepository.save(customer_2);
+		customerRepositoryService.save(customer_2);
 
 		Customer customer_3 = new Customer("Кудря", "Николай", "Петрович", address_1, address_2, Sex.MALE);
-		customerRepository.save(customer_3);
+		customerRepositoryService.save(customer_3);
 
 		Customer customer_4 = new Customer("Осипов", "Юрий", "Алексеевич", address_1, address_1, Sex.MALE);
-		customerRepository.save(customer_4);
+		customerRepositoryService.save(customer_4);
 
 	}
 }

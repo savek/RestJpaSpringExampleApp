@@ -31,4 +31,18 @@ public class AddressRepositoryServiceImpl implements AddressRepositoryService {
     public Address findById(long adr_no) {
         return addressRepository.findById(adr_no);
     }
+
+    /** Возврат кол-ва покупателей связанных с адресом {@link Address} registred
+     * @param adr Объект адреса @{@link Address} */
+    @Override
+    public long getRegistredLinkedCustomerCount(Address adr) {
+        return addressRepository.getRegistredLinkedCustomerCount(adr.getId());
+    }
+
+    /** Возврат кол-ва покупателей связанных по адресу @{@link Address} actual
+     *  @param adr Объект адреса @{@link Address} */
+    @Override
+    public long getActualLinkedCustomerCount(Address adr) {
+        return addressRepository.getActualLinkedCustomerCount(adr.getId());
+    }
 }

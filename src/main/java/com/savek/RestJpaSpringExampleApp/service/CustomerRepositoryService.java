@@ -5,4 +5,8 @@ import java.util.List;
 
 public interface CustomerRepositoryService {
     List<Customer> findAll();
+
+    void save(Customer customer);
+
+    long getAllCount();
 }
