@@ -3,8 +3,8 @@ package com.savek.RestJpaSpringExampleApp;
 import com.savek.RestJpaSpringExampleApp.model.Address;
 import com.savek.RestJpaSpringExampleApp.model.Customer;
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
-import com.savek.RestJpaSpringExampleApp.repository.AddressRepository;
 import com.savek.RestJpaSpringExampleApp.repository.CustomerRepository;
+import com.savek.RestJpaSpringExampleApp.service.AddressRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import com.savek.RestJpaSpringExampleApp.service.AddressRepositoryService;
 
 @SpringBootApplication
 public class RestJpaSpringExampleAppApplication {
@@ -24,9 +23,6 @@ public class RestJpaSpringExampleAppApplication {
 	}
 
 	@Autowired
-	AddressRepository addressRepository;
-
-	@Autowired
 	CustomerRepository customerRepository;
 
 	@Autowired
@@ -36,19 +32,19 @@ public class RestJpaSpringExampleAppApplication {
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 //			fillData();
-			showAddressList();
+//			showAddressList();
 //			showCustomerList();
 
-//			showCustomersViaAddress(3);
+			showCustomersViaAddress(3);
 		};
 	}
 
 	/** Отображение списка покупателей по номеру адреса */
-	private void showCustomersViaAddress(int adr_no) {
+	private void showCustomersViaAddress(long adr_no) {
 		log.info("\n");
 		log.info(String.format("Customers found for address %s:", adr_no));
 		log.info("-------------------------------");
-		addressRepository.findById(adr_no)
+		addressRepositoryService.findById(adr_no)
 				.getCustomers()
 				.forEach(customer -> log.info("Customer id = " + customer.getId() + ", " + customer.getFirstName() + " " + customer.getLastName()));
 	}
@@ -74,30 +70,30 @@ public class RestJpaSpringExampleAppApplication {
 		Address address_1 = new Address("Россия",
 				"Урал",
 				"Екатеринбург",
-				"Лаптева",
-				"1",
-				"1");
+				"Колмогорова",
+				"15",
+				"9");
 
 		Address address_2 = new Address("Россия",
 				"Урал",
 				"Екатеринбург",
-				"Носарева",
-				"15",
-				"27");
+				"Толмачёва",
+				"54",
+				"12");
 
-		addressRepository.save(address_1);
-		addressRepository.save(address_2);
+		addressRepositoryService.save(address_1);
+		addressRepositoryService.save(address_2);
 
-		Customer customer_1 = new Customer(address_1.getId(), address_2.getId(), "Владимир", "Шахрин", "Олегович", Sex.MALE);
+		Customer customer_1 = new Customer("Шахрин", "Владимир", "Олегович", address_1, address_2, Sex.MALE);
 		customerRepository.save(customer_1);
 
-		Customer customer_2 = new Customer(address_2.getId(), address_1.getId(), "Зомбаков", "Валерий", "Генадьевич", Sex.MALE);
+		Customer customer_2 = new Customer("Зомбаков", "Валерий", "Генадьевич", address_2, address_1, Sex.MALE);
 		customerRepository.save(customer_2);
 
-		Customer customer_3 = new Customer(address_1.getId(), address_2.getId(), "Владимир", "Шахрин", "Олегович", Sex.MALE);
+		Customer customer_3 = new Customer("Кудря", "Николай", "Петрович", address_1, address_2, Sex.MALE);
 		customerRepository.save(customer_3);
 
-		Customer customer_4 = new Customer(address_1.getId(), address_1.getId(), "Владимир", "Шахрин", "Олегович", Sex.MALE);
+		Customer customer_4 = new Customer("Осипов", "Юрий", "Алексеевич", address_1, address_1, Sex.MALE);
 		customerRepository.save(customer_4);
 
 	}

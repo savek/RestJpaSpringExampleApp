@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class AddressRepositoryServiceImpl implements AddressRepositoryService {
+
     AddressRepository addressRepository;
 
     @Autowired
@@ -24,5 +25,10 @@ public class AddressRepositoryServiceImpl implements AddressRepositoryService {
     @Override
     public void save(Address address) {
         addressRepository.save(address);
+    }
+
+    @Override
+    public Address findById(long adr_no) {
+        return addressRepository.findById(adr_no);
     }
 }

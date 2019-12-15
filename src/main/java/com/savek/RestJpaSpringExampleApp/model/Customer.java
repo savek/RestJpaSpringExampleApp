@@ -11,14 +11,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Customer implements Serializable {
 
-	public Customer(Long registredAddresId,
-	                Long actualAddressId,
-	                String firstName,
-	                String lastName,
-	                String middleName,
-	                Sex sex) {
-		this.registredAddresId = registredAddresId;
-		this.actualAddressId = actualAddressId;
+	public Customer(String lastName,
+					String firstName,
+					String middleName,
+					Address registredAddresId,
+					Address actualAddressId,
+					Sex sex) {
+		this.registredAddresId = registredAddresId.getId();
+		this.actualAddressId = actualAddressId.getId();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.middleName = middleName;
