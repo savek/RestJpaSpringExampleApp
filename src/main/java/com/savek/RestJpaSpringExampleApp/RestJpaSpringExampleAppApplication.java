@@ -5,6 +5,7 @@ import com.savek.RestJpaSpringExampleApp.model.Customer;
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
 import com.savek.RestJpaSpringExampleApp.repository.CustomerRepository;
 import com.savek.RestJpaSpringExampleApp.service.AddressRepositoryService;
+import com.savek.RestJpaSpringExampleApp.service.CustWithAdrService;
 import com.savek.RestJpaSpringExampleApp.service.CustomerRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class RestJpaSpringExampleAppApplication {
 	@Autowired
 	AddressRepositoryService addressRepositoryService;
 
+	@Autowired
+	CustWithAdrService custWithAdrService;
+
 	@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
@@ -37,11 +41,14 @@ public class RestJpaSpringExampleAppApplication {
 //			showCustomerList();
 
 //			showCustomersViaAddress(3);
-			log.info("Customer count: " + customerRepositoryService.getAllCount());
+//			log.info("Customer count: " + customerRepositoryService.getAllCount());
+//
+//			Address adr_1 = addressRepositoryService.findById(1);
+//			log.info("Customer linked to registred address: " + addressRepositoryService.getRegistredLinkedCustomerCount(adr_1));
+//			log.info("Customer linked to actual address: " + addressRepositoryService.getActualLinkedCustomerCount(adr_1));
 
-			Address adr_1 = addressRepositoryService.findById(1);
-			log.info("Customer linked to registred address: " + addressRepositoryService.getRegistredLinkedCustomerCount(adr_1));
-			log.info("Customer linked to actual address: " + addressRepositoryService.getActualLinkedCustomerCount(adr_1));
+			log.info(custWithAdrService.getByCustomerId(100L).toString());
+
 		};
 	}
 
