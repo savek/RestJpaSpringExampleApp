@@ -2,6 +2,9 @@ package com.savek.RestJpaSpringExampleApp.repository.impl;
 
 import com.savek.RestJpaSpringExampleApp.model.CustWithAdr;
 import com.savek.RestJpaSpringExampleApp.repository.CustWithAdrRepository;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -9,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class JdbcCustWithAdrRepository implements CustWithAdrRepository {
+
+	static Log log = LogFactory.getLog(JdbcCustWithAdrRepository.class);
 
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -26,6 +31,8 @@ public class JdbcCustWithAdrRepository implements CustWithAdrRepository {
 				"      where cust.registred_address_id = adr_reg.id " +
 				"        and cust.actual_address_id = adr_act.id " +
 				"        and cust.id = :id ";
+
+		log.debug("sql = " + sql + ", :id = " + id);
 
 		return jdbcTemplate.queryForObject(sql, new MapSqlParameterSource("id", id), (rs, rowNum) ->
 				new CustWithAdr(rs.getLong("id"),
