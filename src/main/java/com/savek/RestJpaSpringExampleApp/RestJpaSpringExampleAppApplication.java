@@ -37,17 +37,17 @@ public class RestJpaSpringExampleAppApplication {
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 //			fillData();
-			showAddressList();
+//			showAddressList();
 //			showCustomerList();
 
 			showCustomersViaAddress(3);
-//			log.info("Customer count: " + customerRepositoryService.getAllCount());
+//			log.info("Customer count: " + customerRepository.getAllCount());
 //
-//			Address adr_1 = addressRepositoryService.findById(1);
-//			log.info("Customer linked to registred address: " + addressRepositoryService.getRegistredLinkedCustomerCount(adr_1));
-//			log.info("Customer linked to actual address: " + addressRepositoryService.getActualLinkedCustomerCount(adr_1));
-
-			log.info(custWithAdrRepository.getByCustomerId(100L).toString());
+//			Address adr_1 = addressRepository.findById(1).get();
+//			log.info("Customer linked to registred address: " + addressRepository.getRegistredLinkedCustomerCount(adr_1.getId()));
+//			log.info("Customer linked to actual address: " + addressRepository.getActualLinkedCustomerCount(adr_1.getId()));
+//
+//			log.info(custWithAdrRepository.getByCustomerId(100L).toString());
 		};
 	}
 
