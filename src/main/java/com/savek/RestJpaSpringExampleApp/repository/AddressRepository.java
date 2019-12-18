@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface AddressRepository extends CrudRepository<Address, Long> {
-	Address findById(long id);
+	Optional<Address> findById(long id);
 
 	/**
 	 *  Возврат общего кол-ва адресов

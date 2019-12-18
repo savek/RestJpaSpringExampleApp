@@ -1,5 +1,6 @@
 package com.savek.RestJpaSpringExampleApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
 import lombok.*;
 import javax.persistence.*;
@@ -50,6 +51,7 @@ public class Customer implements Serializable {
 	@Enumerated(value = EnumType.STRING)
 	private Sex sex;
 
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "registred_address_id",
 				insertable = false,
@@ -58,6 +60,7 @@ public class Customer implements Serializable {
 	@Setter(AccessLevel.NONE)
 	private Address registredAddress;
 
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "actual_address_id",
 				insertable = false,

@@ -1,9 +1,12 @@
 package com.savek.RestJpaSpringExampleApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -40,22 +43,27 @@ public class Address implements Serializable {
 	@Column(nullable = false)
 	private String flat;
 
+	@JsonIgnore
 	@Column(nullable = false)
 	private Timestamp created;
 
+	@JsonIgnore
 	@Column(nullable = false)
 	private Timestamp modified;
 
 	/** Поле игнорируется при валидации схемы */
 	@Transient
+	@JsonIgnore
 	private Integer ignoredField;
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "actual_address_id", referencedColumnName = "id")
 	@Setter(AccessLevel.NONE)
 	@Getter(AccessLevel.NONE)
 	private Set<Customer> customers_actual_adr;
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "registred_address_id", referencedColumnName = "id")
 	@Setter(AccessLevel.NONE)
@@ -74,12 +82,30 @@ public class Address implements Serializable {
 		this.street = street;
 		this.house = house;
 		this.flat = flat;
-		this.created = new Timestamp(System.currentTimeMillis());
-		this.modified = new Timestamp(System.currentTimeMillis());
+		this.created = getDefaultDate();
+		this.modified = getDefaultDate();
 	}
 
-	/** Возврат списка покупателей, ссылающих на этот адрес.
-	 * На тот случай, если на этот адрес никто не ссылается, возвращается пустая коллекция. */
+	/**
+	 * Значение даты "по дефолту"
+	 * */
+	private Timestamp getDefaultDate() {
+		return new Timestamp(System.currentTimeMillis());
+	}
+
+	/**
+	 * Установка значений полей дат
+	 * */
+	public void setAddressFefaultDate() {
+		created = getDefaultDate();
+		modified = getDefaultDate();
+	}
+
+	/**
+	 * Возврат списка покупателей, ссылающих на этот адрес.
+	 * На тот случай, если на этот адрес никто не ссылается, возвращается пустая коллекция.
+	 * */
+	@JsonIgnore
 	public Set<Customer> getCustomers() {
 		Set<Customer> customers = new HashSet<>();
 		customers.addAll(customers_actual_adr);

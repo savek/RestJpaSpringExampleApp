@@ -3,10 +3,10 @@ package com.savek.RestJpaSpringExampleApp;
 import com.savek.RestJpaSpringExampleApp.model.Address;
 import com.savek.RestJpaSpringExampleApp.model.Customer;
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
+import com.savek.RestJpaSpringExampleApp.repository.AddressRepository;
+import com.savek.RestJpaSpringExampleApp.repository.CustWithAdrRepository;
 import com.savek.RestJpaSpringExampleApp.repository.CustomerRepository;
-import com.savek.RestJpaSpringExampleApp.service.AddressRepositoryService;
-import com.savek.RestJpaSpringExampleApp.service.CustWithAdrService;
-import com.savek.RestJpaSpringExampleApp.service.CustomerRepositoryService;
+import com.savek.RestJpaSpringExampleApp.repository.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,30 +25,29 @@ public class RestJpaSpringExampleAppApplication {
 	}
 
 	@Autowired
-	CustomerRepositoryService customerRepositoryService;
+	CustomerRepository customerRepository;
 
 	@Autowired
-	AddressRepositoryService addressRepositoryService;
+	AddressRepository addressRepository;
 
 	@Autowired
-	CustWithAdrService custWithAdrService;
+	CustWithAdrRepository custWithAdrRepository;
 
 	@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 //			fillData();
-//			showAddressList();
+			showAddressList();
 //			showCustomerList();
 
-//			showCustomersViaAddress(3);
+			showCustomersViaAddress(3);
 //			log.info("Customer count: " + customerRepositoryService.getAllCount());
 //
 //			Address adr_1 = addressRepositoryService.findById(1);
 //			log.info("Customer linked to registred address: " + addressRepositoryService.getRegistredLinkedCustomerCount(adr_1));
 //			log.info("Customer linked to actual address: " + addressRepositoryService.getActualLinkedCustomerCount(adr_1));
 
-			log.info(custWithAdrService.getByCustomerId(100L).toString());
-
+			log.info(custWithAdrRepository.getByCustomerId(100L).toString());
 		};
 	}
 
@@ -59,7 +58,7 @@ public class RestJpaSpringExampleAppApplication {
 		log.info("\n");
 		log.info(String.format("Customers found for address %s:", adr_no));
 		log.info("-------------------------------");
-		addressRepositoryService.findById(adr_no)
+		addressRepository.findById(adr_no).orElseThrow(AddressNotFoundException::new)
 				.getCustomers()
 				.forEach(customer -> log.info("Customer id = " + customer.getId() + ", " + customer.getFirstName() + " " + customer.getLastName()));
 	}
@@ -70,7 +69,7 @@ public class RestJpaSpringExampleAppApplication {
 	private void showCustomerList() {
 		log.info("Customers found with findAll():");
 		log.info("-------------------------------");
-		for (Customer customer : customerRepositoryService.findAll())
+		for (Customer customer : customerRepository.findAll())
 			log.info(customer.toString());
 	}
 
@@ -78,7 +77,7 @@ public class RestJpaSpringExampleAppApplication {
 	private void showAddressList() {
 		log.info("Addresses found with findAll():");
 		log.info("-------------------------------");
-		for (Address address : addressRepositoryService.findAll())
+		for (Address address : addressRepository.findAll())
 			log.info(address.toString());
 	}
 
@@ -100,20 +99,20 @@ public class RestJpaSpringExampleAppApplication {
 				"54",
 				"12");
 
-		addressRepositoryService.save(address_1);
-		addressRepositoryService.save(address_2);
+		addressRepository.save(address_1);
+		addressRepository.save(address_2);
 
 		Customer customer_1 = new Customer("Шахрин", "Владимир", "Олегович", address_1, address_2, Sex.MALE);
-		customerRepositoryService.save(customer_1);
+		customerRepository.save(customer_1);
 
 		Customer customer_2 = new Customer("Зомбаков", "Валерий", "Генадьевич", address_2, address_1, Sex.MALE);
-		customerRepositoryService.save(customer_2);
+		customerRepository.save(customer_2);
 
 		Customer customer_3 = new Customer("Кудря", "Николай", "Петрович", address_1, address_2, Sex.MALE);
-		customerRepositoryService.save(customer_3);
+		customerRepository.save(customer_3);
 
 		Customer customer_4 = new Customer("Осипов", "Юрий", "Алексеевич", address_1, address_1, Sex.MALE);
-		customerRepositoryService.save(customer_4);
+		customerRepository.save(customer_4);
 
 	}
 }
