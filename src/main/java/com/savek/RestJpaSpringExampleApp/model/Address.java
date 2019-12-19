@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -82,23 +80,23 @@ public class Address implements Serializable {
 		this.street = street;
 		this.house = house;
 		this.flat = flat;
-		this.created = getDefaultDate();
-		this.modified = getDefaultDate();
+		this.created = getSysDate();
+		this.modified = getSysDate();
 	}
 
 	/**
-	 * Значение даты "по дефолту"
+	 * Значение даты "по дефолту" (sysdate)
 	 * */
-	private Timestamp getDefaultDate() {
+	public static Timestamp getSysDate() {
 		return new Timestamp(System.currentTimeMillis());
 	}
 
 	/**
-	 * Установка значений полей дат
+	 * Установка значений полей дат "Дата создания" и "Дата изменения"
 	 * */
-	public void setAddressFefaultDate() {
-		created = getDefaultDate();
-		modified = getDefaultDate();
+	public void setDefaultDates() {
+		created = getSysDate();
+		modified = getSysDate();
 	}
 
 	/**

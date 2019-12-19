@@ -72,10 +72,11 @@ public class Customer implements Serializable {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof Customer)) return false;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		Customer customer = (Customer) o;
 
+		if (id != null ? !id.equals(customer.id) : customer.id != null) return false;
 		if (registredAddresId != null ? !registredAddresId.equals(customer.registredAddresId) : customer.registredAddresId != null)
 			return false;
 		if (actualAddressId != null ? !actualAddressId.equals(customer.actualAddressId) : customer.actualAddressId != null)
@@ -83,22 +84,18 @@ public class Customer implements Serializable {
 		if (firstName != null ? !firstName.equals(customer.firstName) : customer.firstName != null) return false;
 		if (lastName != null ? !lastName.equals(customer.lastName) : customer.lastName != null) return false;
 		if (middleName != null ? !middleName.equals(customer.middleName) : customer.middleName != null) return false;
-		if (sex != customer.sex) return false;
-		if (registredAddress != null ? !registredAddress.equals(customer.registredAddress) : customer.registredAddress != null)
-			return false;
-		return actualAddress != null ? actualAddress.equals(customer.actualAddress) : customer.actualAddress == null;
+		return sex == customer.sex;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = registredAddresId != null ? registredAddresId.hashCode() : 0;
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (registredAddresId != null ? registredAddresId.hashCode() : 0);
 		result = 31 * result + (actualAddressId != null ? actualAddressId.hashCode() : 0);
 		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
 		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
 		result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
 		result = 31 * result + (sex != null ? sex.hashCode() : 0);
-		result = 31 * result + (registredAddress != null ? registredAddress.hashCode() : 0);
-		result = 31 * result + (actualAddress != null ? actualAddress.hashCode() : 0);
 		return result;
 	}
 }
