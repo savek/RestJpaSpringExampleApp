@@ -1,5 +1,8 @@
 package com.savek.RestJpaSpringExampleApp.repository.exception;
 
+/**
+ * Адрес с таким ID не найден
+ * */
 public class AddressNotFoundException extends RuntimeException {
 
 	public AddressNotFoundException(String message, Throwable cause) {

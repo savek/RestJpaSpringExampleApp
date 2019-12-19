@@ -1,15 +1,12 @@
 package com.savek.RestJpaSpringExampleApp.service;
 
-import com.savek.RestJpaSpringExampleApp.model.Address;
 import com.savek.RestJpaSpringExampleApp.model.Customer;
 import com.savek.RestJpaSpringExampleApp.repository.CustomerRepository;
 import com.savek.RestJpaSpringExampleApp.service.enums.RemoveResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.savek.RestJpaSpringExampleApp.repository.exception.*;
-import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.Map;
 

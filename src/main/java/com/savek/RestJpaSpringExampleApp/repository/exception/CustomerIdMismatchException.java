@@ -1,5 +1,8 @@
 package com.savek.RestJpaSpringExampleApp.repository.exception;
 
+/**
+ * Неверный ID покупателя
+ * */
 public class CustomerIdMismatchException extends RuntimeException {
 	public CustomerIdMismatchException() {
 	}

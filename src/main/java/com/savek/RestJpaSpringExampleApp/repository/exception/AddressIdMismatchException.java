@@ -1,5 +1,8 @@
 package com.savek.RestJpaSpringExampleApp.repository.exception;
 
+/**
+ * Неверный ID адреса
+ * */
 public class AddressIdMismatchException extends RuntimeException {
 
 	public AddressIdMismatchException(Throwable cause) {
