@@ -4,8 +4,11 @@ import com.savek.RestJpaSpringExampleApp.model.Address;
 import com.savek.RestJpaSpringExampleApp.repository.AddressRepository;
 import com.savek.RestJpaSpringExampleApp.repository.exception.*;
 
+import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.Map;
+
+import com.savek.RestJpaSpringExampleApp.service.enums.RemoveResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/addresses")
 public class AddressController {
-
-	enum RemoveResult {
-		OK, NO_OK_LINKED_ROWS_FOUND
-	};
 
 	@Autowired
 	AddressRepository addressRepository;
@@ -40,11 +39,12 @@ public class AddressController {
 
 	@PutMapping("/{id}")
 	public Address updateAddress(@RequestBody Address updAdr, @PathVariable Long id) {
-		if (updAdr.getId() != id) {
+		if (!updAdr.getId().equals(id)) {
 			throw new AddressIdMismatchException();
 		}
 
-		Address foundAdr = addressRepository.findById(id)
+		Address foundAdr = addressRepository
+				.findById(id)
 				.orElseThrow(AddressNotFoundException::new);
 
 		foundAdr.setContry(updAdr.getContry());
@@ -60,11 +60,14 @@ public class AddressController {
 
 	@DeleteMapping("/{id}")
 	public Map<String, RemoveResult> deleteAddress(@PathVariable Long id) {
-		addressRepository.findById(id)
+		Address foundAdr = addressRepository.findById(id)
 				.orElseThrow(AddressNotFoundException::new);
 
-		addressRepository.deleteById(id);
+		// Проверка наличия ссылок на запись
+		if (foundAdr.getCustomers().size() != 0)
+			return Collections.singletonMap("RESULT", RemoveResult.NOT_REMOVED_LINKED_ROWS_FOUND);
 
+		addressRepository.deleteById(id);
 		return Collections.singletonMap("RESULT", RemoveResult.OK);
 	}
 }
