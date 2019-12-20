@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.savek.RestJpaSpringExampleApp.repository.exception.*;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -61,5 +63,10 @@ public class CustomerContoller {
 
 		customerRepository.deleteById(id);
 		return Collections.singletonMap("RESULT", RemoveResult.OK);
+	}
+
+	@GetMapping("/findByFirstAndLastName")
+	public List<Customer> findByFirstAndLastName(@RequestParam String firstName, @RequestParam String lastName) {
+		return customerRepository.findByFirstNameAndLastName(firstName, lastName);
 	}
 }
