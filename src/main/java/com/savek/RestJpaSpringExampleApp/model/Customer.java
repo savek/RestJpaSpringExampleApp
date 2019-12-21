@@ -26,6 +26,20 @@ public class Customer implements Serializable {
 		this.sex = sex;
 	}
 
+	public Customer(String lastName,
+					String firstName,
+					String middleName,
+					Long registredAddresId,
+					Long actualAddressId,
+					Sex sex) {
+		this.registredAddresId = registredAddresId;
+		this.actualAddressId = actualAddressId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+		this.sex = sex;
+	}
+
 	@Id()
 	@Setter(AccessLevel.NONE)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,7 +66,7 @@ public class Customer implements Serializable {
 	private Sex sex;
 
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "registred_address_id",
 				insertable = false,
 				updatable = false,
@@ -61,7 +75,7 @@ public class Customer implements Serializable {
 	private Address registredAddress;
 
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "actual_address_id",
 				insertable = false,
 				updatable = false,

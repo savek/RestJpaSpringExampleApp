@@ -28,56 +28,6 @@ public class AddressServiceTest {
 	}
 
 	/**
-	 * Формирование случайного адреса в формате JSON
-	 * */
-	private String getRandomAdrJson() {
-		// Формат объекта Address
-		String address = "{\"contry\":\"%s\",\"region\":\"%s\",\"city\":\"%s\",\"street\":\"%s\",\"house\":\"%s\",\"flat\":\"%s\"}";
-
-		return String.format(address,
-							 randomAlphabetic(10), // country
-							 randomAlphabetic(15), // region
-							 randomAlphabetic(8),  // city
-							 randomAlphabetic(20), // street
-							 randomNumeric(2),     // house
-							 randomNumeric(2));
-	}
-
-	/**
-	 * Формирование случайного адреса в формате JSON, с заданным ID
-	 * */
-	private String getRandomAdrJsonId(String id) {
-		// Формат объекта Address
-		String address = "{\"id\":\"%s\", \"contry\":\"%s\",\"region\":\"%s\",\"city\":\"%s\",\"street\":\"%s\",\"house\":\"%s\",\"flat\":\"%s\"}";
-
-		return String.format(address,
-				id,                          // id
-				randomAlphabetic(10), // country
-				randomAlphabetic(15), // region
-				randomAlphabetic(8),  // city
-				randomAlphabetic(20), // street
-				randomNumeric(2),     // house
-				randomNumeric(2));
-	}
-
-	/**
-	 * Формирование случайного адреса
-	 * @return ID сформированного адреса
-	 * */
-	private String createRandomAddress() {
-		// Тело "Адреса" в формате JSON
-		String randomAdrJson = getRandomAdrJson();
-
-		// Запрос на создание адреса
-		Response response = RestAssured.given()
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.body(randomAdrJson)
-				.post(_apiRoot());
-
-		return response.jsonPath().get("id").toString();
-	}
-
-	/**
 	 * Получение списка адресов
 	 * */
 	@Test
@@ -136,4 +86,53 @@ public class AddressServiceTest {
 		assertEquals(HttpStatus.OK.value(), response.getStatusCode());
 	}
 
+	/**
+	 * Формирование случайного адреса в формате JSON
+	 * */
+	private String getRandomAdrJson() {
+		// Формат объекта Address
+		String address = "{\"contry\":\"%s\",\"region\":\"%s\",\"city\":\"%s\",\"street\":\"%s\",\"house\":\"%s\",\"flat\":\"%s\"}";
+
+		return String.format(address,
+				randomAlphabetic(10), // country
+				randomAlphabetic(15), // region
+				randomAlphabetic(8),  // city
+				randomAlphabetic(20), // street
+				randomNumeric(2),     // house
+				randomNumeric(2));
+	}
+
+	/**
+	 * Формирование случайного адреса в формате JSON, с заданным ID
+	 * */
+	private String getRandomAdrJsonId(String id) {
+		// Формат объекта Address
+		String address = "{\"id\":\"%s\", \"contry\":\"%s\",\"region\":\"%s\",\"city\":\"%s\",\"street\":\"%s\",\"house\":\"%s\",\"flat\":\"%s\"}";
+
+		return String.format(address,
+				id,                          // id
+				randomAlphabetic(10), // country
+				randomAlphabetic(15), // region
+				randomAlphabetic(8),  // city
+				randomAlphabetic(20), // street
+				randomNumeric(2),     // house
+				randomNumeric(2));
+	}
+
+	/**
+	 * Формирование случайного адреса
+	 * @return ID сформированного адреса
+	 * */
+	private String createRandomAddress() {
+		// Тело "Адреса" в формате JSON
+		String randomAdrJson = getRandomAdrJson();
+
+		// Запрос на создание адреса
+		Response response = RestAssured.given()
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.body(randomAdrJson)
+				.post(_apiRoot());
+
+		return response.jsonPath().get("id").toString();
+	}
 }
