@@ -49,7 +49,7 @@ public class CustomerContoller {
 		foundCust.setFirstName(updCust.getFirstName());
 		foundCust.setMiddleName(updCust.getMiddleName());
 		foundCust.setSex(updCust.getSex());
-		foundCust.setRegistredAddresId(updCust.getRegistredAddresId());
+		foundCust.setRegistredAddressId(updCust.getRegistredAddressId());
 		foundCust.setActualAddressId(updCust.getActualAddressId());
 
 		return customerRepository.save(foundCust);

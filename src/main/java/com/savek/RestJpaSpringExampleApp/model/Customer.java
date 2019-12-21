@@ -15,10 +15,10 @@ public class Customer implements Serializable {
 	public Customer(String lastName,
 					String firstName,
 					String middleName,
-					Address registredAddresId,
+					Address registredAddressId,
 					Address actualAddressId,
 					Sex sex) {
-		this.registredAddresId = registredAddresId.getId();
+		this.registredAddressId = registredAddressId.getId();
 		this.actualAddressId = actualAddressId.getId();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -29,10 +29,10 @@ public class Customer implements Serializable {
 	public Customer(String lastName,
 					String firstName,
 					String middleName,
-					Long registredAddresId,
+					Long registredAddressId,
 					Long actualAddressId,
 					Sex sex) {
-		this.registredAddresId = registredAddresId;
+		this.registredAddressId = registredAddressId;
 		this.actualAddressId = actualAddressId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -47,7 +47,7 @@ public class Customer implements Serializable {
 	private Long id;
 
 	@Column(name = "registred_address_id", nullable = false)
-	private Long registredAddresId;
+	private Long registredAddressId;
 
 	@Column(name = "actual_address_id", nullable = false)
 	private Long actualAddressId;
@@ -91,7 +91,7 @@ public class Customer implements Serializable {
 		Customer customer = (Customer) o;
 
 		if (id != null ? !id.equals(customer.id) : customer.id != null) return false;
-		if (registredAddresId != null ? !registredAddresId.equals(customer.registredAddresId) : customer.registredAddresId != null)
+		if (registredAddressId != null ? !registredAddressId.equals(customer.registredAddressId) : customer.registredAddressId != null)
 			return false;
 		if (actualAddressId != null ? !actualAddressId.equals(customer.actualAddressId) : customer.actualAddressId != null)
 			return false;
@@ -104,7 +104,7 @@ public class Customer implements Serializable {
 	@Override
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (registredAddresId != null ? registredAddresId.hashCode() : 0);
+		result = 31 * result + (registredAddressId != null ? registredAddressId.hashCode() : 0);
 		result = 31 * result + (actualAddressId != null ? actualAddressId.hashCode() : 0);
 		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
 		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);

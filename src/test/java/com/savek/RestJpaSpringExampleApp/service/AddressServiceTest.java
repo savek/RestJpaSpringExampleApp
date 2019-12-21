@@ -1,5 +1,6 @@
-package com.savek.RestJpaSpringExampleApp;
+package com.savek.RestJpaSpringExampleApp.service;
 
+import com.savek.RestJpaSpringExampleApp.RestJpaSpringExampleAppApplication;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;

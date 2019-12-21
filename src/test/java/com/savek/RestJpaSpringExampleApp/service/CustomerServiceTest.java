@@ -1,5 +1,6 @@
-package com.savek.RestJpaSpringExampleApp;
+package com.savek.RestJpaSpringExampleApp.service;
 
+import com.savek.RestJpaSpringExampleApp.RestJpaSpringExampleAppApplication;
 import com.savek.RestJpaSpringExampleApp.model.Address;
 import com.savek.RestJpaSpringExampleApp.model.Customer;
 import com.savek.RestJpaSpringExampleApp.model.enums.Sex;
@@ -95,7 +96,7 @@ public class CustomerServiceTest {
 				"    \"firstName\": \"Валерий\"," +
 				"    \"lastName\": \"Зомбаков\"," +
 				"    \"middleName\": \"Генадьевич\"," +
-				"    \"registredAddresId\": " + adrRegistred.getId() + "," +
+				"    \"registredAddressId\": " + adrRegistred.getId() + "," +
 				"    \"sex\": \"MALE\"" +
 				"  }";
 
